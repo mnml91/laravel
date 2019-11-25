@@ -1,0 +1,11 @@
+FROM php:7.2.2-cli
+
+RUN apt-get update -y \
+        && apt-get install -y libmcrypt-dev \
+        && apt-get install -y mysql-client \
+        && rm -rf /var/lib/apt \
+        && yes '' | pecl install -f mcrypt \
+        && echo "extension=mcrypt.so" > /usr/local/etc/php/conf.d/mcrypt.ini \
+        && docker-php-ext-install pdo_mysql pcntl
+
+WORKDIR /var/www
