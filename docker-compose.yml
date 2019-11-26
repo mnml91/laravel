@@ -54,9 +54,3 @@ services:
     image: redis:3.0
     ports:
       - "63791:6379"
-  node:
-    image: node:alpine
-    volumes:
-      - ./:/var/www
-    working_dir: /var/www
-    tty: true
