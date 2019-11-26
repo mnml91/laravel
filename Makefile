@@ -1,22 +1,24 @@
-doc-i:
+dinfo:
 	docker images -a
 	@echo "======================================="
 	docker ps -a
 
-doc-up: memory
+dcup: memory
 	docker-compose up -d
 
-doc-down:
+dcdown:
 	docker-compose down
 
-doc-build: memory
+dcbuild: memory perm
 	docker-compose up --build -d
 
 migrate:
-	docker exec laravel_php-fpm_1 php artisan migrate
+	docker-compose exec php-fpm php artisan migrate
+# 	docker exec laravel_php-fpm_1 php artisan migrate
 
 test:
-	docker exec laravel_php-cli_1 vendor/bin/phpunit --colors=always
+	docker-compose exec php-cli vendor/bin/phpunit
+# 	docker exec laravel_php-cli_1 vendor/bin/phpunit --colors=always
 
 memory:
 	sudo sysctl -w vm.max_map_count=262144
