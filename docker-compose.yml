@@ -1,56 +1,55 @@
-version: '2'
+version: '3'
 services:
   nginx:
     build:
       context: ./
-      dockerfile: docker/nginx.docker
+      dockerfile: docker/nginx/nginx.docker
     volumes:
       - ./:/var/www
     ports:
       - "8080:80"
-    links:
+    networks:
+      - test-network
+    depends_on:
       - php-fpm
   php-fpm:
     build:
       context: ./
-      dockerfile: docker/php-fpm.docker
+      dockerfile: docker/php-fpm/php-fpm.docker
     volumes:
       - ./:/var/www
-    links:
-      - mysql
-      - redis
     environment:
-      - "DB_PORT=3306"
-      - "DB_HOST=mysql"
-      - "REDIS_PORT=6379"
-      - "REDIS_HOST=redis"
-  php-cli:
-    build:
-      context: ./
-      dockerfile: docker/php-cli.docker
-    volumes:
-      - ./:/var/www
-    links:
-      - mysql
-      - redis
-    environment:
-      - "DB_PORT=3306"
-      - "DB_HOST=mysql"
-      - "REDIS_PORT=6379"
-      - "REDIS_HOST=redis"
-    tty: true
+      XDEBUG_CONFIG: "remote_host=192.168.220.1 remote_enable=1 remote_autostart=off  remote_port=9001"
+      PHP_IDE_CONFIG: "serverName=docker-php-fpm"
+      DB_PORT: "3306"
+      DB_HOST: "mysql"
+      REDIS_PORT: "6379"
+      REDIS_HOST: "redis"
+    networks:
+      - test-network
   mysql:
     image: mysql:5.7
     volumes:
       - ./storage/docker/mysql:/var/lib/mysql
     environment:
-      - "MYSQL_ROOT_PASSWORD=secret"
-      - "MYSQL_USER=app"
-      - "MYSQL_PASSWORD=secret"
-      - "MYSQL_DATABASE=app"
+      MYSQL_ROOT_PASSWORD: "secret"
+      MYSQL_USER: "app"
+      MYSQL_PASSWORD: "secret"
+      MYSQL_DATABASE: "app"
     ports:
       - "33061:3306"
+    networks:
+      - test-network
   redis:
     image: redis:3.0
     ports:
       - "63791:6379"
+    networks:
+      - test-network
+networks:
+  test-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.220.0/28

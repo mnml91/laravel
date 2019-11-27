@@ -17,8 +17,7 @@ migrate:
 # 	docker exec laravel_php-fpm_1 php artisan migrate
 
 test:
-	docker-compose exec php-cli vendor/bin/phpunit
-# 	docker exec laravel_php-cli_1 vendor/bin/phpunit --colors=always
+	docker-compose exec php-fpm vendor/bin/phpunit
 
 memory:
 	sudo sysctl -w vm.max_map_count=262144
