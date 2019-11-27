@@ -10,6 +10,4 @@ RUN apt-get update -y \
         && pecl install xdebug \
         && docker-php-ext-enable xdebug
 
-ADD ./php.ini /usr/local/etc/php/
-
 WORKDIR /var/www
