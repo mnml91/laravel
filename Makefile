@@ -3,6 +3,9 @@ dinfo:
 	@echo "======================================="
 	docker ps -a
 
+dclearc:
+	docker container rm $$(docker ps -a) -f
+
 dcup: memory
 	docker-compose up -d
 
