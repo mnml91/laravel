@@ -18,6 +18,7 @@ services:
       dockerfile: docker/php-fpm/php-fpm.docker
     volumes:
       - ./:/var/www
+    user: "1000:1000"
     environment:
       XDEBUG_CONFIG: "remote_host=192.168.220.1 remote_enable=1 remote_autostart=off  remote_port=9001"
       PHP_IDE_CONFIG: "serverName=docker-php-fpm"
@@ -50,6 +51,7 @@ services:
     image: node:13.8.0-alpine3.10
     volumes:
       - ./:/var/www
+    user: "1000:1000"
     working_dir: /var/www
     tty: true
 networks:
