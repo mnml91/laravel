@@ -1,26 +1,52 @@
-dinfo:
+info:
 	docker images -a
 	@echo "======================================="
 	docker ps -a
 
-dclearc:
-	docker container rm $$(docker ps -a) -f
+clear:
+	docker container rm $$(docker ps -aq) -f
 
-dcup: memory
+up: memory
 	docker-compose up -d
 
-dcdown:
+down:
 	docker-compose down
 
-dcbuild: memory perm
+up-b: memory perm
 	docker-compose up --build -d
+
+####################################################
+
+bash:
+	docker-compose exec php-fpm bash
 
 migrate:
 	docker-compose exec php-fpm php artisan migrate
-# 	docker exec laravel_php-fpm_1 php artisan migrate
+
+key:
+	docker-compose exec php-fpm php artisan key:generate
+
+tinker:
+	docker-compose exec php-fpm php artisan tinker
 
 test:
 	docker-compose exec php-fpm vendor/bin/phpunit
+
+####################################################
+
+a-install:
+	docker-compose exec node yarn install
+
+a-rebuild:
+	docker-compose exec node npm rebuild node-sass --force
+
+a-run-dev:
+	docker-compose exec node yarn run dev
+
+a-run-watch:
+	docker-compose exec node yarn run watch
+
+####################################################
 
 memory:
 	sudo sysctl -w vm.max_map_count=262144
@@ -28,18 +54,3 @@ memory:
 perm:
 	sudo chgrp -R www-data storage bootstrap/cache
 	sudo chmod -R ug+rwx storage bootstrap/cache
-
-# queue:
-# 	docker-compose exec php-cli php artisan queue:work
-#
-# horizon:
-# 	docker-compose exec php-cli php artisan horizon
-#
-# horizon-pause:
-# 	docker-compose exec php-cli php artisan horizon:pause
-#
-# horizon-continue:
-# 	docker-compose exec php-cli php artisan horizon:continue
-#
-# horizon-terminate:
-# 	docker-compose exec php-cli php artisan horizon:terminate
