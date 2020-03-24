@@ -44,7 +44,7 @@ a-run-dev:
 	docker-compose exec node yarn run dev
 
 a-run-watch:
-	docker-compose exec node yarn run watch
+	docker-compose exec node yarn run watch-poll
 
 ####################################################
 

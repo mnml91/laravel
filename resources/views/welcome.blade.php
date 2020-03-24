@@ -3,7 +3,7 @@
 @section('breadcrumbs', '')
 
 @section('content')
-
+    <example-component></example-component>
     <div class="card card-default mb-3">
         <div class="card-header">
             All Categories
