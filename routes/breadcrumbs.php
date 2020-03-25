@@ -42,3 +42,9 @@ Breadcrumbs::register('cabinet', function (Crumbs $crumbs) {
     $crumbs->parent('home');
     $crumbs->push('Cabinet', route('cabinet'));
 });
+
+// DKA
+
+Breadcrumbs::for('dka', function (Crumbs $crumbs) {
+    $crumbs->push('DKA', route('dka'));
+});

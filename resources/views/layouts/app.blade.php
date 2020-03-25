@@ -48,6 +48,7 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <li><a class="nav-link" href="{{ route('dka') }}">DKA</a></li>
                         <!-- Authentication Links -->
                         @guest
                             <li><a class="nav-link" href="{{ route('login') }}">Login</a></li>

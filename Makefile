@@ -29,6 +29,9 @@ key:
 tinker:
 	docker-compose exec php-fpm php artisan tinker
 
+cache:
+	docker-compose exec php-fpm php artisan config:cache
+
 test:
 	docker-compose exec php-fpm vendor/bin/phpunit
 
