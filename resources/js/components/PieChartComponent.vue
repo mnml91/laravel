@@ -1,6 +1,7 @@
 <template>
     <div>
         <pie-chart :chart-data="data" :options="options" :height="200"></pie-chart>
+        <button class="btn btn-sm btn-danger" @click="update">Update</button>
     </div>
 </template>
 
@@ -23,7 +24,7 @@
         },
         methods: {
             update() {
-                axios.get('/chart-data').then(response => {
+                axios.get('/chart-pie-data').then(response => {
                     this.data = response.data
                 })
             }
