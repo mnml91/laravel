@@ -54,6 +54,12 @@ services:
     user: "1000:1000"
     working_dir: /var/www
     tty: true
+  maildev:
+    image: maildev/maildev
+    ports:
+      - "1080:80"
+    networks:
+      - test-network
 networks:
   test-network:
     driver: bridge
